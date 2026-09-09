@@ -5,14 +5,16 @@
 //  Created by David Onuche on 09/09/2026.
 //
 
-import SwiftUI
+import Foundation
 
-struct PageModel: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+struct Page: Identifiable {
+    let id: Int
+    let imageName: String
 }
 
-#Preview {
-    PageModel()
+
+extension Page {
+    var thumbnailName: String {
+        return "thumb-" + imageName
+    }
 }

@@ -5,14 +5,9 @@
 //  Created by David Onuche on 09/09/2026.
 //
 
-import SwiftUI
+import Foundation
 
-struct PageData: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    PageData()
-}
+let pageData: [Page] = [
+    Page(id: 1, imageName: "magazine-front-cover"),
+    Page(id: 2, imageName: "magazine-back-cover"),
+]
