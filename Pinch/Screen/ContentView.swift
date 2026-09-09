@@ -11,6 +11,7 @@ struct ContentView: View {
     // MARK: - PROPERTY
     @State private var isAnimating: Bool = false
     @State private var imageScale: CGFloat = 1
+    @State private var lastScale: CGFloat = 1
     @State private var imageOffSet: CGSize = .zero
     
     // MARK: - FUNCTION
@@ -54,14 +55,39 @@ struct ContentView: View {
                             .onChanged { value in
                                 withAnimation(.linear(duration: 1)) {
                                     imageOffSet = value.translation
-                        }
-                    }
-                            .onEnded { _ in
-                                if imageScale <= 1 {
-                                   resetImageState()
                                 }
                             }
-                )
+                            .onEnded { _ in
+                                if imageScale <= 1 {
+                                    resetImageState()
+                                }
+                            }
+                    )
+                // MARK: - 3. MAGNIFICATION
+                    .gesture(
+                        MagnifyGesture()
+                            .onChanged { value in
+                                withAnimation(.linear(duration: 1)) {
+                                    let newScale = lastScale * value.magnification
+                                    
+                                    if newScale >= 1 && newScale <= 5 {
+                                        imageScale = newScale
+                                    } else if newScale > 5 {
+                                        imageScale = 5
+                                    } else {
+                                        imageScale = 1
+                                    }
+                                    //                                    if imageScale >= 1 && imageScale <= 5 {
+                                    //                                        imageScale = value
+                                    //                                    } else if imageScale > 5 {
+                                    //                                        imageScale = 5
+                                    //                                    }
+                                }
+                            }
+                            .onEnded { _ in
+                                      lastScale = imageScale
+            }
+                    )
             } //: ZSTACK
             .navigationTitle("Pinch & Zoom")
             .navigationBarTitleDisplayMode(.inline)
